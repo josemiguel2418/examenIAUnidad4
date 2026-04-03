@@ -1,24 +1,43 @@
 import csv
 import os
 
-def cargar_csv(nombre_archivo):
+def get_precios_colmados():
     datos = []
+    nombre_archivo = 'lista_compras.csv'
     with open(nombre_archivo, mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for fila in csv_reader:
-            
-            if 'precio' in fila:
-                fila['precio'] = float(fila['precio'])
-            if 'cantidad' in fila:
-                fila['cantidad'] = float(fila['cantidad'])
+            fila['precio'] = float(fila['precio'])
             datos.append(fila)
     return datos
+
+def get_lista_compras():
+    datos = []
+    nombre_archivo = 'precios_colmados.csv'
+    with open(nombre_archivo, mode='r', encoding='utf-8') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for fila in csv_reader:
+            fila['cantidad'] = float(fila['cantidad'])
+            datos.append(fila)
+    return datos
+
+def escribir_archivo_salida(nombre_archivo,datos):
+
+    if not os.path.exists('salida'):
+        os.makedirs('salida')
+
+    archivo_salida = f"salida/{nombre_archivo}"
+    with open(archivo_salida, mode='w', newline='', encoding='utf-8') as csv_file:
+        csv_writer = csv.DictWriter(csv_file, fieldnames=datos[0].keys())
+        csv_writer.writeheader()
+        csv_writer.writerows(datos)
+    
 
 def recomendar_ahorro(barrio_seleccionado):
     
     
-    precios_colmados = cargar_csv('precios_colmados.csv')
-    lista_compras = cargar_csv('lista_compras.csv')
+    precios_colmados = get_precios_colmados()
+    lista_compras = get_lista_compras()
 
     precios_barrio = [fila for fila in precios_colmados if fila['barrio'].lower() == barrio_seleccionado.lower()]
 
@@ -90,19 +109,6 @@ def recomendar_ahorro(barrio_seleccionado):
 
     nombre_archivo = f"recomendacion_{barrio_seleccionado.replace(' ', '_')}.csv"
     escribir_archivo_salida(nombre_archivo,resultados)
-    
-
-def escribir_archivo_salida(nombre_archivo,datos):
-
-    if not os.path.exists('salida'):
-        os.makedirs('salida')
-
-    archivo_salida = f"salida/{nombre_archivo}"
-    with open(archivo_salida, mode='w', newline='', encoding='utf-8') as csv_file:
-        csv_writer = csv.DictWriter(csv_file, fieldnames=datos[0].keys())
-        csv_writer.writeheader()
-        csv_writer.writerows(datos)
-    
 
 print("******** Sistema AhorraRD ********")
 
