@@ -1,0 +1,5 @@
+producto,marca,colmado,precio,costo_total,sugerencia
+Arroz 10lb,Dos Pinos,Ana Maria,430.0,1290.0,Producto exacto encontrado
+Aceite de Soya,La Joya,Ana Maria,580.0,580.0,Producto exacto encontrado
+Jugo de naranja,Rica,Ana Maria,123.0,246.0,Producto exacto encontrado
+Jugo de manzana,Rica,Los Valdez,78.0,78.0,"Se recomienda Jugo de manzana marca Rica, ya que es la alternativa más barata al producto original que ingresaste(jugo de pera) y pertenece a la misma categoria"

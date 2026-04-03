@@ -3,7 +3,7 @@ import os
 
 def get_precios_colmados():
     datos = []
-    nombre_archivo = 'lista_compras.csv'
+    nombre_archivo = 'precios_colmados.csv'
     with open(nombre_archivo, mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for fila in csv_reader:
@@ -13,7 +13,7 @@ def get_precios_colmados():
 
 def get_lista_compras():
     datos = []
-    nombre_archivo = 'precios_colmados.csv'
+    nombre_archivo = 'lista_compras.csv'
     with open(nombre_archivo, mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for fila in csv_reader:
@@ -45,7 +45,7 @@ def recomendar_ahorro(barrio_seleccionado):
     total_compra = 0
     ahorro_total = 0
 
-    print(f"******** Recomendación para {barrio_seleccionado} ********")
+    print(f"******** Recomendación para el barrio {barrio_seleccionado} ********")
 
     for item in lista_compras:
         producto_buscado = item['producto'].lower()
@@ -84,7 +84,7 @@ def recomendar_ahorro(barrio_seleccionado):
                 producto_mas_barato_alternativo = min(productos_seleccionados_alternativos, key=lambda x: x['precio'])
                 costo_total_producto = producto_mas_barato_alternativo['precio'] * cantidad
                 
-                explicacion = f"Se recomienda {producto_mas_barato_alternativo['producto']} marca {producto_mas_barato_alternativo['marca']}, ya que es la alternativa más barata al producto original que ingresaste({producto_buscado})"
+                explicacion = f"Se recomienda {producto_mas_barato_alternativo['producto']} marca {producto_mas_barato_alternativo['marca']}, ya que es la alternativa más barata al producto original que ingresaste({producto_buscado}) y pertenece a la misma categoria"
                                
                 
                 resultados.append({
@@ -100,6 +100,7 @@ def recomendar_ahorro(barrio_seleccionado):
 
    
     print("-" * 50)
+    print(" Productos | Colmados | Costos ")
     for resultado in resultados:
         print(f"{resultado['producto']} | {resultado['colmado']} | RD${resultado['costo_total']}")
     
